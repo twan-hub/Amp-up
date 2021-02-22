@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head"></head>
+
+<body style="
+      margin: 0;
+      background-color: gainsboro;">
+    <nav style="
+    border-bottom: solid black 1px;
+    border-top: solid black 1px;
+     background-color:deepskyblue ;
+     padding: 1em;">
+        <nav th:replace="fragments :: page-header"></nav>
+    </nav>
+
+
+
+    <div style="
+margin:5em;
+">
+        <h1 style="
+margin-top:0;
+text-align:center;
+">Select Playlist</h1>
+        <div style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 2em;
+">
+            <div>
+
+                <form method="post" style="
+max-width: 600px;
+     background-color:deepskyblue ;
+padding: 4em;
+border-radius: 3em;
+border-style: outset;
+">
+
+                    <div th:each="playlist : ${playlists}" style="
+flex-direction: row;
+justify-content: space-between;
+display: flex;
+font-size: x-large;
+align-items: center;
+margin-bottom:1em;
+">
+
+                        <span th:text="${playlist.name}"></span>
+                        <input type="checkbox" name="playlistIds" th:value="${playlist.id}">
+                    </div>
+                    <input type="submit" value="Add Song to Playlist" style="
+                background-color: forestgreen;
+width: 100%;
+height: 2em;
+border: 2px gainsboro unset;
+border-radius: 2em;
+font-size: large;
+" />
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

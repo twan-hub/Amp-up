@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head">
+</head>
+
+<body style="
+      margin: 0;
+      background-color: deepskyblue;">
+    <nav style="
+     background-color: gainsboro;
+     padding: 1em;">
+        <nav th:replace="fragments :: page-header"></nav>
+    </nav>
+
+
+    <div style="
+text-align: end;
+margin-top: 3em;
+display: flex;
+justify-content: space-evenly;
+font-size: larger;
+">
+        <a href="/add" style="
+                text-decoration: none;
+color: black;
+background-color: black;
+color: white;
+padding: 1em;
+border-radius: 1em;
+            ">Add Song</a>
+        <a href="/delete" style="
+                text-decoration: none;
+color: black;
+background-color: black;
+color: white;
+padding: 1em;
+border-radius: 1em;
+            ">Delete Song</a>
+    </div>
+
+    <div style="
+display: flex;
+flex-direction: column;
+align-items: center;
+margin: 5em;
+">
+
+        <h1>Discover New Song</h1>
+
+        <ul th:each="song : ${songs}" style="
+width: 100%;
+font-size: xx-large;
+padding: 1em;
+background-color: black;
+color: white;
+">
+            <span th:text="${song.title} + ' by ' + ${song.artist}" style="
+    text-decoration: none;
+    color: white;
+"></span>
+            <a th:href="@{'/playlistSelect/'+ ${song.id}}">
+                <div th:text="'+'" style="
+float: right;
+margin: .5em;
+text-decoration: none;
+color: white;
+font-size:xx-large;
+"></div>
+            </a>
+            <a th:href="@{'/view/' + ${song.id}}">
+                <div th:text="'View Song'" style="
+float: right;
+margin: .5em;
+font-size:x-large;
+text-decoration: none;
+color: white;
+"></div>
+            </a>
+        </ul>
+
+    </div>
+
+</body>
+
+</html>

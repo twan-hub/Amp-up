@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head">
+</head>
+
+<body style="
+      margin: 0;
+      background-color: gainsboro;">
+    <nav style="
+    border-bottom: solid black 1px;
+    border-top: solid black 1px;
+     background-color:deepskyblue ;
+     padding: 1em;">
+        <nav th:replace="fragments :: page-header"></nav>
+    </nav>
+
+    <br>
+    <br>
+    <br>
+
+    <div style="
+display: flex;
+justify-content: center;
+align-content: center;
+">
+        <div th:each="playlist:${playlists}" style="
+display: flex;
+flex-direction: column;
+font-size: x-large;
+">
+            <h1 th:text="${'Playlist: '+playlist.name}" style="
+text-align: center;
+"></h1>
+            <div>
+
+                <p th:text="${'Songs: '}"></p>
+            </div>
+
+            <div th:each="i : ${playlist.songs}">
+                <form method="post">
+                    <div style="
+display: flex;
+flex-direction: column;
+">
+                        <input type="hidden" name="songId" th:value="${i.id}" />
+                        <input type="submit" value="Remove Song -" style="
+font-size: large;
+background: red;
+border: solid darkgrey 2px;
+border-radius: 2em;
+float: left;
+width: 8em;
+padding: .5em;
+" />
+                        <p th:text="${'Name: ' + i.title}" style="
+    background: black;
+    color: white;
+    margin: 0;
+    padding: 24px 0px 24px 40px;
+    width: 100%;
+    border: 2px solid black;
+"></p>
+                    </div>
+
+
+
+                    <p style="
+   margin: 0;
+    padding: 24px 0px 24px 40px;
+    width: 100%;
+    border: 2px solid black;
+"><a th:href="${i.link}" target="_blank" th:text="${'Link: ' + i.link}"></a></p>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>

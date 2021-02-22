@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head th:fragment="head">
+
+    <!-- Bootstrap stylesheets and script -->
+    <!--    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />-->
+    <!--   <link th:href="@{/css/ampUp.css}" rel="stylesheet" />-->
+    <!--    <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>-->
+
+    <title th:text="'Amp-Up' + ${title == null ? '' : ' :: ' + title}">Amp-Up</title>
+</head>
+
+<body>
+
+    <div th:fragment="page-header">
+        <div style="
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 1.2em;
+">
+            <div >
+                <a href="/"  style="
+                text-decoration: none;
+                color: black;
+            ">Amp-up</a>
+            </div>
+
+            <a href="/search" style="
+                text-decoration: none;
+                color: black;
+            ">Search</a>
+
+
+            <a href="/playlist" style="
+                text-decoration: none;
+                color: black;
+            ">Playlist</a>
+            <a href="/logout" style="
+                text-decoration: none;
+                color: black;
+            ">Logout</a>
+
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head">
+</head>
+
+<body style="
+      margin: 0;
+      background-color: deepskyblue;">
+    <nav style="
+     background-color: gainsboro;
+     padding: 1em;">
+        <nav th:replace="fragments :: page-header"></nav>
+    </nav>
+
+    <div >
+
+
+        <form th:action="@{/search/results}" method="post" style="
+display: flex;
+flex-direction: column;
+">
+            <div style="
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: flex-start;
+font-size: larger;
+">
+                <h2>Search by:</h2>
+
+                <p>
+                    <span th:each="column : ${columns}">
+                        <input type="radio" name="searchType" th:id="${column.key}" th:value="${column.key}"
+                            th:checked="${column.key == 'all'}" />
+                        <label th:for="${column.key}" th:text="${column.value}"></label>
+
+                    </span>
+
+                </p>
+            </div>
+            <div style="
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: flex-start;
+font-size: larger;
+">
+                <p>
+                    <label for="searchTerm">Keyword:</label>
+                    <input type="text" name="searchTerm" id="searchTerm" style="
+               background-color: gainsboro;
+height: 2em;
+border-radius: 2em;
+font-size: large;
+padding-left: 1em;
+" />
+                </p>
+                <input type="submit" value="Search" style="
+
+height: 2em;
+border-radius: 2em;
+font-size: large;
+margin-left: .5em;
+" />
+            </div>
+
+
+        </form>
+
+        <hr />
+        <div style="
+overflow: hidden;
+display: flex;
+justify-content: center;
+">
+            <div>
+                <div th:each="song : ${songs}" style="
+display: flex;
+justify-content: center;
+align-content: center;
+flex-direction: column;
+font-size: x-large;
+margin-top:1em;
+">
+                    <a th:href="@{'/playlistSelect/'+ ${song.id}}">
+                        <div th:text="'Add to Playlist +'" style="
+        color:black;
+float: right;
+margin: .5em;
+text-decoration: none;
+font-size:xx-large;
+"></div>
+                    </a>
+                    <a th:href="@{'/view/' + ${song.id}}" th:text="${'Name: ' + song.title}" style="
+    background: black;
+    color: white;
+    margin: 0;
+    padding: 24px 0 24px 40px;
+    width: 100%;
+    border: 2px solid black;
+"> </a>
+                    <p th:text="${'Genre: ' + song.genre}" style="
+        background-color: gainsboro;
+    margin: 0;
+    padding: 24px 0 24px 40px;
+    width: 100%;
+    border: 2px solid black;
+"></p>
+                    <p th:text="${'Link: ' + song.link}" style="
+    background: black;
+    color: white;
+    margin: 0;
+    padding: 24px 0 24px 40px;
+    width: 100%;
+    border: 2px solid black;
+"></p>
+                    <p th:text="${'Artist: '+ song.artist}" style="
+        background-color: gainsboro;
+    margin: 0;
+    padding: 24px 0 24px 40px;
+    width: 100%;
+    border: 2px solid black;
+"> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

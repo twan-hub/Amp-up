@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head"></head>
+
+<body style="
+      margin: 0;
+      background-color: deepskyblue;">
+    <nav style="
+     background-color: gainsboro;
+     padding: 1em;">
+        <nav th:replace="fragments :: page-header"></nav>
+    </nav>
+
+    <div style="
+overflow: hidden;
+padding: 2em;
+display: flex;
+align-items: center;
+flex-direction: column;
+margin: 1em;
+">
+        <h1 th:text="${'View: ' + song.title}">Default Title</h1>
+        <div style="
+display: flex;
+justify-content: center;
+align-content: center;
+flex-direction: column;
+font-size: x-large;
+margin-top:1em;
+">
+            <p th:text="${'Name: ' + song.title}" style="
+    background: black;
+    color: white;
+    margin: 0;
+    padding: 24px 40px;
+    width: 100%;
+    border: 2px solid black;
+"></p>
+            <p th:text="${'Genre: ' + song.genre}" style="
+        background-color: gainsboro;
+    margin: 0;
+    padding: 24px 40px;
+    width: 100%;
+    border: 2px solid black;
+"></p>
+            <a th:href="${song.link}" target="_blank" th:text="${'Link: ' + song.link}" style="
+    background: black;
+    color: white;
+    margin: 0;
+    padding: 24px 40px;
+    width: 100%;
+    border: 2px solid black;
+"></a>
+            <p th:text="${'Artist: '+ song.artist}" style="
+        background-color: gainsboro;
+    margin: 0;
+    padding: 24px 40px;
+    width: 100%;
+    border: 2px solid black;
+"> </p>
+
+            <br>
+            <br>
+        </div>
+    </div>
+    <div style="display: flex;justify-content: center;">
+
+        <a th:href="@{/edit/{Id}(Id=${song.id})}" style="text-align: center;"><button style="
+        background-color: forestgreen;
+        border-radius:2em;
+margin-top: 1em;
+font-size: large;
+padding: .5em;
+        float: center;
+">Edit Song</button></a>
+    </div>
+
+
+</body>
+
+</html>

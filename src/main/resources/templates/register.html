@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head"></head>
+
+<body class="container body-content" style="
+      margin: 0;
+      background-color: gainsboro;">
+    <nav style="
+     background-color:deepskyblue ;
+     padding: 1em;">
+        <nav th:replace="fragments :: page-header"></nav>
+    </nav>
+
+    <br>
+    <br>
+    <br>
+
+    <div style="
+display: flex;
+align-items: center;
+flex-direction: column;
+">
+        <form method="post" style="
+max-width: 600px;
+     background-color:deepskyblue ;
+padding: 4em;
+border-radius: 3em;
+border-style: outset;
+">
+
+            <div style="
+padding: 1em;
+">
+                <label>Username
+                    <input class="form-control" th:field="${registerFormDTO.username}" style="
+width: 100%;
+height: 2em;
+border: 2px gainsboro unset;
+border-radius: 2em;
+font-size: large;
+" />
+                </label>
+                <p class="error" th:errors="${registerFormDTO.username}" style="
+color:red;
+"></p>
+            </div>
+            <div style="
+padding: 1em;
+">
+                <label>Password
+                    <input class="form-control" th:field="${registerFormDTO.password}" type="password" style="
+width: 100%;
+height: 2em;
+border: 2px gainsboro unset;
+border-radius: 2em;
+font-size: large;
+" />
+                </label>
+                <p th:errors="${registerFormDTO.password}" style="
+color:red;
+"></p>
+            </div>
+            <div style="
+padding: 1em;
+">
+                <label>Verify Password
+                    <input th:field="${registerFormDTO.verifyPassword}" type="password" style="
+width: 100%;
+height: 2em;
+border: 2px gainsboro unset;
+border-radius: 2em;
+font-size: large;
+" />
+                </label>
+            </div>
+            <div style="
+padding: 1em;
+">
+                <input type="submit" class="btn btn-primary" value="Register" style="
+    background-color: forestgreen;
+width:100%;
+height: 2em;
+border: 2px gainsboro unset;
+border-radius: 2em;
+font-size: large;
+" />
+            </div>
+
+        </form>
+
+        <p>Don't have an account? <a href="/login">Log in</a></p>
+    </div>
+</body>
+
+</html>
