@@ -5,6 +5,8 @@ import com.ampup.Ampup.models.User;
 import com.ampup.Ampup.models.data.UserRepository;
 import com.ampup.Ampup.services.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+@RestController
+@CrossOrigin(origins = "http://localhost:8080")
 public class AuthenticationFilter extends HandlerInterceptorAdapter {
 
     @Autowired
@@ -56,5 +60,6 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
         response.sendRedirect("/login");
         return false;
     }
+
 
 }

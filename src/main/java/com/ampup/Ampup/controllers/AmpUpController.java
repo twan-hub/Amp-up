@@ -1,6 +1,9 @@
 package com.ampup.Ampup.controllers;
 
 
+import com.ampup.Ampup.models.DTO.LoginFormDTO;
+import com.ampup.Ampup.models.DTO.RegisterFormDTO;
+import com.ampup.Ampup.models.Ids;
 import com.ampup.Ampup.models.Playlist;
 import com.ampup.Ampup.models.Song;
 import com.ampup.Ampup.models.User;
@@ -13,11 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 public class AmpUpController {
 
     @Autowired
@@ -37,50 +41,38 @@ public class AmpUpController {
 
 
     @RequestMapping("")
-    public String index (Model model, HttpSession session){
+    public User index (Model model, HttpSession session){
         User user=authenticationService.getUserFromSession(session);
-        model.addAttribute("username",user.getUsername());
-        model.addAttribute("title","Song");
-        model.addAttribute("songs",songRepository.findAll());
-        return "index";
+        return user;
     }
-
-
-    @GetMapping("add")
-    public String displayAddSongForm(@ModelAttribute Song song, Model model) {
-        model.addAttribute("title", "Add New Song");
-        model.addAttribute("song", song);
-        return "add";
-    }
-
 
     @PostMapping("add")
-    public String processAddSongForm(@ModelAttribute @Valid Song newSong,
-                                    Errors errors, Model model) {
+    public Song processAddSongForm(@RequestBody @Valid Song newSong) {
 
-        if(errors.hasErrors()){
-            model.addAttribute("title", "Add New Song");
-            return "add";
-        }
+//        if(errors.hasErrors()){
+//            model.addAttribute("title", "Add New Song");
+//            return "add";
+//        }
         songRepository.save(newSong);
-        model.addAttribute("song", songRepository.findAll());
-        return "redirect:";
+
+        return newSong;
     }
 
-    @GetMapping("delete")
-    public String displayDeleteSongForm(Model model) {
-//        model.addAttribute("title", "Delete Grocery List");
-        model.addAttribute("songs", songRepository.findAll());
-        return "delete";
-    }
+//    @GetMapping("delete")
+//    public String displayDeleteSongForm(Model model) {
+////        model.addAttribute("title", "Delete Grocery List");
+//        model.addAttribute("songs", songRepository.findAll());
+//        return "delete";
+//    }
 
     @PostMapping("delete")
-    public String processDeleteSongForm(@RequestParam(required = false) int[] songIds) {
-
+    public int processDeleteSongForm(@RequestBody @Valid Ids songIds) {
+        int i = 0;
         if (songIds != null) {
-            for (int id : songIds) {
+            for (int id : songIds.getSongIds()) {
                 Iterable<Playlist> playlists=playlistRepository.findAll();
                 for(Playlist playlist:playlists){
+                    i++;
                     Optional<Song> optSong=songRepository.findById(id);
                     Song song=optSong.get();
                     playlist.deleteSong(song);
@@ -89,9 +81,10 @@ public class AmpUpController {
                 }
                 songRepository.deleteById(id);
             }
+            return i;
         }
 
-        return "redirect:";
+        return i;
     }
 
     @GetMapping("edit/{Id}")
@@ -126,15 +119,18 @@ public class AmpUpController {
         return "redirect:../";
     }
     @GetMapping("view/{songId}")
-    public String displayViewSong(Model model, @PathVariable int songId) {
+    public Optional displayViewSong(Model model, @PathVariable int songId, HttpSession session) {
+        User user=authenticationService.getUserFromSession(session);
         Optional optSong = songRepository.findById(songId);
-        if (optSong.isPresent()) {
-            Song song = (Song) optSong.get();
-            model.addAttribute("song", song);
-            return "view";
-        } else {
-            return "redirect:../";
-        }
+            return optSong;
+    }
+
+    @GetMapping("/all/users")
+    public LoginFormDTO displa( LoginFormDTO reg) {
+        reg.setPassword("12345678");
+        reg.setUsername("arewed");
+
+            return reg;
     }
 }
 // we did it!gjgjgjgugugugjg
