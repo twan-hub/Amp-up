@@ -48,13 +48,12 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
         User user = authenticationService.getUserFromSession(session);
 
         // The user is logged in
-        if (user != null) {
+
             return true;
-        }
+
 
         // The user is NOT logged in
-        response.sendRedirect("/login");
-        return false;
+
     }
 
 }
