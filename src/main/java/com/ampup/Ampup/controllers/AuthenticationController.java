@@ -60,45 +60,49 @@ public class AuthenticationController {
         userRepository.save(newUser);
         authenticationService.setUserInSession(request.getSession(), newUser);
 
-        return "Success";
+        return "Successful Registration";
     }
 
 
-//    @PostMapping("/login")
-//    public String processLoginForm(@ModelAttribute @Valid LoginFormDTO loginFormDTO,
-//                                   Errors errors, HttpServletRequest request,
-//                                   Model model) {
-//
-//        if (errors.hasErrors()) {
+    @PostMapping("/login")
+    @CrossOrigin(origins="*")
+    public String processLoginForm(@RequestBody @Valid LoginFormDTO loginFormDTO,
+                                   Errors errors, HttpServletRequest request,
+                                   Model model) {
+
+        if (errors.hasErrors()) {
+            return "Invalid";
+        }
+
+        User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
+        String password = loginFormDTO.getPassword();
+        if (theUser == null||!theUser.isMatchingPassword(password)) {
+            return "Password or Username";
+        }
+
+
+
+//        if (!theUser.isMatchingPassword(password)) {
+//            errors.rejectValue("password", "password.invalid", "Invalid Username or Password");
 //            model.addAttribute("title", "Log In");
 //            return "login";
 //        }
+
+        authenticationService.setUserInSession(request.getSession(), theUser);
+
+        return "Successful Login";
+    }
+
+    @GetMapping("/user")
+    public User returnUser(HttpSession session){
+        User user = authenticationService.getUserFromSession(session);
+        return user;
+    }
 //
-//        User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
-//        String password = loginFormDTO.getPassword();
-//        if (theUser == null||!theUser.isMatchingPassword(password)) {
-//            errors.rejectValue("username", "user.invalid", "Invalid Username or Password");
-//            model.addAttribute("title", "Log In");
-//            return "login";
-//        }
-//
-//
-//
-////        if (!theUser.isMatchingPassword(password)) {
-////            errors.rejectValue("password", "password.invalid", "Invalid Username or Password");
-////            model.addAttribute("title", "Log In");
-////            return "login";
-////        }
-//
-//        authenticationService.setUserInSession(request.getSession(), theUser);
-//
-//        return "redirect:";
-//    }
-//
-//    @GetMapping("/logout")
-//    public String logout(HttpServletRequest request){
-//        request.getSession().invalidate();
-//        return "redirect:/login";
-//    }
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().invalidate();
+        return "Logout Successful";
+    }
 }
 //
